@@ -2,12 +2,105 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=./cockpit.html">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#071329">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Cockpit Gabriel">
+  <link rel="stylesheet" href="styles.css?v=20260720-3">
   <title>Cockpit Gabriel</title>
-  <script>location.replace('./cockpit.html');</script>
 </head>
 <body>
-  <p><a href="./cockpit.html">Ouvrir Cockpit Gabriel</a></p>
+  <header class="topbar">
+    <div><p id="today" class="eyebrow"></p><h1 id="hello">Cockpit Gabriel</h1></div>
+    <button id="backupBtn" class="icon-btn" aria-label="Sauvegarde">⚙︎</button>
+  </header>
+
+  <main>
+    <section id="home" class="view active">
+      <article class="panel energy-panel">
+        <p class="eyebrow">Énergie du jour</p>
+        <h2 id="energyTitle">Choisis ton niveau</h2>
+        <p id="energyAdvice" class="muted">Le nombre de priorités sera adapté automatiquement.</p>
+        <div class="energy-grid">
+          <button data-energy="Rouge" class="energy red">●<span>Rouge</span></button>
+          <button data-energy="Orange" class="energy orange">●<span>Orange</span></button>
+          <button data-energy="Vert" class="energy green">●<span>Vert</span></button>
+        </div>
+      </article>
+      <div id="kpis" class="kpis"></div>
+      <article class="panel">
+        <div class="section-head"><div><p class="eyebrow">Action rapide</p><h2>Ajouter</h2></div></div>
+        <div class="quick-grid">
+          <button data-add="task">＋<span>Tâche</span></button>
+          <button data-add="admin">＋<span>Démarche</span></button>
+          <button data-add="finance">＋<span>Mouvement</span></button>
+          <button data-add="idea">＋<span>Idée</span></button>
+        </div>
+      </article>
+      <article class="panel">
+        <div class="section-head"><div><p class="eyebrow">Cette semaine</p><h2>3 résultats maximum</h2></div><button data-go="week" class="link-btn">Gérer</button></div>
+        <div id="homeGoals" class="stack"></div>
+      </article>
+      <article class="panel">
+        <div class="section-head"><div><p class="eyebrow">À surveiller</p><h2>Alertes utiles</h2></div></div>
+        <div id="alerts" class="stack"></div>
+      </article>
+    </section>
+
+    <section id="todayView" class="view">
+      <div class="page-head"><div><p class="eyebrow">Priorités</p><h2>Aujourd’hui</h2><p id="limit" class="muted"></p></div><button data-add="task" class="primary">＋ Ajouter</button></div>
+      <div class="chips"><button data-filter="open" class="chip active">Ouvertes</button><button data-filter="all" class="chip">Toutes</button><button data-filter="done" class="chip">Terminées</button></div>
+      <div id="tasks" class="stack"></div>
+    </section>
+
+    <section id="week" class="view">
+      <div class="page-head"><div><p class="eyebrow">Cap hebdomadaire</p><h2>Résultats de la semaine</h2><p class="muted">Un résultat doit être concret et terminé.</p></div><button data-add="goal" class="primary">＋ Résultat</button></div>
+      <div id="goals" class="stack"></div>
+    </section>
+
+    <section id="follow" class="view">
+      <div class="page-head"><div><p class="eyebrow">Suivis</p><h2>Ce qui ne doit pas rester dans ta tête</h2></div></div>
+      <div class="chips modules"><button data-module="admin" class="chip active">Administration</button><button data-module="finance" class="chip">Finances</button><button data-module="jobs" class="chip">Emploi</button><button data-module="gco" class="chip">GCO</button><button data-module="ideas" class="chip">Attente</button></div>
+      <div id="moduleSummary" class="summary"></div>
+      <div class="section-head module-title"><h2 id="moduleTitle">Administration</h2><button id="moduleAdd" class="primary">＋ Ajouter</button></div>
+      <div id="moduleList" class="stack"></div>
+    </section>
+
+    <section id="review" class="view">
+      <div class="page-head"><div><p class="eyebrow">Bilan</p><h2>Comprendre ton rythme</h2><p class="muted">Pas de culpabilité, seulement des données utiles.</p></div><button data-add="checkin" class="primary">＋ Bilan</button></div>
+      <div id="reviewKpis" class="kpis"></div>
+      <div id="checkins" class="stack"></div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button data-view="home" class="active"><b>⌂</b><span>Accueil</span></button>
+    <button data-view="todayView"><b>✓</b><span>Aujourd’hui</span></button>
+    <button data-view="week"><b>3</b><span>Semaine</span></button>
+    <button data-view="follow"><b>≡</b><span>Suivis</span></button>
+    <button data-view="review"><b>◔</b><span>Bilan</span></button>
+  </nav>
+
+  <dialog id="editor">
+    <form id="editorForm">
+      <div class="dialog-head"><div><p class="eyebrow" id="formKicker">Nouvel élément</p><h2 id="formTitle">Ajouter</h2></div><button type="button" data-close="editor" class="icon-btn">✕</button></div>
+      <div id="fields" class="fields"></div>
+      <div class="dialog-actions"><button type="button" data-close="editor" class="secondary">Annuler</button><button type="submit" class="primary">Enregistrer</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="settingsDialog">
+    <div class="settings-wrap">
+      <div class="dialog-head"><div><p class="eyebrow">Données</p><h2>Sauvegarde</h2></div><button type="button" data-close="settingsDialog" class="icon-btn">✕</button></div>
+      <p class="muted">Les données restent dans Safari sur cet iPhone. Exporte régulièrement une sauvegarde dans Fichiers ou iCloud Drive.</p>
+      <button id="exportBtn" class="primary full">Exporter la sauvegarde</button>
+      <label class="secondary full file-label">Restaurer une sauvegarde<input id="importInput" type="file" accept="application/json,.json"></label>
+      <button id="resetBtn" class="danger full">Effacer toutes les données</button>
+    </div>
+  </dialog>
+
+  <div id="toast"></div>
+  <script src="app.js?v=20260720-3"></script>
 </body>
 </html>
