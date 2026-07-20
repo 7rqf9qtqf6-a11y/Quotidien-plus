@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Cockpit Gabriel">
-  <link rel="stylesheet" href="styles.css?v=20260720-3">
+  <link rel="stylesheet" href="styles.css?v=20260720-4">
   <title>Cockpit Gabriel</title>
 </head>
 <body>
@@ -33,9 +33,9 @@
         <div class="section-head"><div><p class="eyebrow">Action rapide</p><h2>Ajouter</h2></div></div>
         <div class="quick-grid">
           <button data-add="task">＋<span>Tâche</span></button>
+          <button data-add="health">＋<span>État physique</span></button>
           <button data-add="admin">＋<span>Démarche</span></button>
           <button data-add="finance">＋<span>Mouvement</span></button>
-          <button data-add="idea">＋<span>Idée</span></button>
         </div>
       </article>
       <article class="panel">
@@ -61,8 +61,9 @@
 
     <section id="follow" class="view">
       <div class="page-head"><div><p class="eyebrow">Suivis</p><h2>Ce qui ne doit pas rester dans ta tête</h2></div></div>
-      <div class="chips modules"><button data-module="admin" class="chip active">Administration</button><button data-module="finance" class="chip">Finances</button><button data-module="jobs" class="chip">Emploi</button><button data-module="gco" class="chip">GCO</button><button data-module="ideas" class="chip">Attente</button></div>
+      <div class="chips modules"><button data-module="admin" class="chip active">Administration</button><button data-module="health" class="chip">État physique</button><button data-module="finance" class="chip">Finances</button><button data-module="jobs" class="chip">Emploi</button><button data-module="gco" class="chip">GCO</button><button data-module="ideas" class="chip">Attente</button></div>
       <div id="moduleSummary" class="summary"></div>
+      <p id="moduleNotice" class="muted" hidden></p>
       <div class="section-head module-title"><h2 id="moduleTitle">Administration</h2><button id="moduleAdd" class="primary">＋ Ajouter</button></div>
       <div id="moduleList" class="stack"></div>
     </section>
@@ -101,6 +102,7 @@
   </dialog>
 
   <div id="toast"></div>
-  <script src="app.js?v=20260720-3"></script>
+  <script src="app.js?v=20260720-4"></script>
+  <script src="health.js?v=20260720-4"></script>
 </body>
 </html>
